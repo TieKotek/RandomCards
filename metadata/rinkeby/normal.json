@@ -1,0 +1,11 @@
+{
+    "name": "DOG",
+    "description": "A dog!",
+    "image": "https://ipfs.io/ipfs/QmadFQMyr8EqyDzUeGy2c7A3zk2qh7rmYJjfHN2LSn9gVu?filename=dog.png",
+    "attributes": [
+        {
+            "trait_type": "cuteness",
+            "value": 25
+        }
+    ]
+}
