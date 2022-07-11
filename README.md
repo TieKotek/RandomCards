@@ -130,3 +130,7 @@ legendRate, epicRate, rareRate, normalRate：即各个稀有度对应的百分�
 
 **注意**：没有正确订阅服务、部署合约时填入错误地址或keyHash、订阅后没有充值LINK或者LINK耗尽、没有将合约添加为Comsumer都会导致合约无法正常运行。
 
+## 六、参考资料
+https://www.youtube.com/watch?v=M576WGiDBdQ
+
+https://github.com/smartcontractkit/full-blockchain-solidity-course-py
