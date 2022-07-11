@@ -22,7 +22,7 @@ A brownie project for random cards system on Ethereum.
 ## 四、rinkeby实例及交互方法
 
 
-我们的实例部署在了rinkeby测试网络上，可以通过下面这个链接访问到我们的合约并进行交互。
+我们的实例部署在了rinkeby测试网络上，可以通过下面这个链接访问到我们的合约并进行交互：
 https://rinkeby.etherscan.io/address/0xeb471970806369b4769571e206fe631a033b78e8
 
 如下图为合约读接口：
@@ -37,10 +37,8 @@ https://rinkeby.etherscan.io/address/0xeb471970806369b4769571e206fe631a033b78e8
 ### 读接口：
 
 #### 1. usdEntryFee
-这个接口会返回由合约部署方决定的单抽美元价格，其小数点精度为18，即返回的数字为
-$$
-        单抽美元价格\times 10^{18}
-$$
+这个接口会返回由合约部署方决定的单抽美元价格，其小数点精度为18，即返回的数字为：单抽美元价格* 10^18
+
 
 #### 2. getEntryFee
 这个接口会返回usdEntryFee美元数量对应的ETH价格，以wei为单位，这个价格为参加抽卡所需的最小ETH数量。
@@ -98,7 +96,7 @@ metadata url: https://ipfs.io/ipfs/QmQ9XZQFa7jamtZj9f6wfzkN3udxuSwki5wBd1W82RBf3
 
 之前提到了，我们的随机数由Chainlink提供，因此在部署合约之前，我们需要通过下面的链接进行订阅：https://vrf.chain.link
 
-订阅完毕后，我们需要向VRF coordinator提供一些link代币，每一次申请随机数，将会消耗我们一定的代币（这也是为什么我们的抽卡系统的入场费比较高）
+订阅完毕后，我们需要向VRF coordinator提供一些LINK代币，每一次申请随机数，将会消耗我们一定的LINK（这也是为什么我们的抽卡系统的入场费设置得比较高，因为成本同样不低）
 ![sub](/img/sub.png)
 
 
@@ -119,7 +117,8 @@ metadata url: https://ipfs.io/ipfs/QmQ9XZQFa7jamtZj9f6wfzkN3udxuSwki5wBd1W82RBf3
 
 subscriptionId为我们的订阅号，在订阅后能够查询到
 
-vrfCoordinator、keyHash、priceFeedAddress均可以在 https://docs.chain.link 查询到（注意不同以太坊网络这些合约是不相同的），其含义分别为向我们提供随机数的合约地址、不同gas费对应的keyhash（gas费越高，随机数相应越快）、向我们提供ETH/USD汇率数据的地址。
+vrfCoordinator、keyHash、priceFeedAddress：均可以在 https://docs.chain.link 查询到（注意不同以太坊网络这些合约地址是不相同的），其含义分别为向我们提供随机数的合约地址、不同gas费对应的keyhash（gas费越高，随机数相应越快）、向我们提供ETH/USD汇率数据的地址。
+legendRate, epicRate, rareRate, normalRate：即各个稀有度对应的百分比，要求其和必须为100。
 
 将对应的数据填入，并发出部署合约交易。
 
@@ -127,5 +126,7 @@ vrfCoordinator、keyHash、priceFeedAddress均可以在 https://docs.chain.link 
 
 在部署合约后，我们需要将合约的地址添加为VRF服务的消费者。这允许了我们的合约使用我们订阅的VRF服务，同样在 https://vrf.chain.link 完成。
 ![add](/img/add.png)
+在部署了合约之后，合约拥有者可以通过withdraw函数取出合约上积攒的ETH。
 
 **注意**：没有正确订阅服务、部署合约时填入错误地址或keyHash、订阅后没有充值LINK或者LINK耗尽、没有将合约添加为Comsumer都会导致合约无法正常运行。
+
