@@ -82,7 +82,7 @@ metadata url: https://ipfs.io/ipfs/QmQ9XZQFa7jamtZj9f6wfzkN3udxuSwki5wBd1W82RBf3
 
 ![Normal](/img/dog.png)
 
-metadata url: https://ipfs.io/ipfs/QmQ9XZQFa7jamtZj9f6wfzkN3udxuSwki5wBd1W82RBf3i?filename=rare.json
+metadata url: https://ipfs.io/ipfs/Qme6qr1yKQVA4PL7XwS9rkmAoGMgX8CaTRunGUMgnyL5qg?filename=normal.json
 
 
 概率：50%
