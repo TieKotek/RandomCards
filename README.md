@@ -4,7 +4,7 @@ A brownie project for random cards system on Ethereum.
 
 ## 一、项目背景
 
-近几年来，抽卡游戏在全世界范围内越来越火热，但基本上现存的所有含有抽卡元素的游戏均为传统的中心化游戏。即代码不公开，且由游戏发行商运行传统服务器来维持游戏运营。因此，经常有游戏玩家诟病抽卡机制与商家声称的不一致，游戏发行商“暗箱操作”等等。显然，抽卡游戏需要玩家对发行商的信任，这让我们想到了近年来大火的区块链游戏（GameFi），我们是否能将抽卡游戏做到区块链上呢？依据区块链（公链）公开透明、不可篡改的性质，且[Chainlink](https://chain.link/)为以太坊智能合约提供了可验证随机数（VRF）服务，这使得我们的抽卡系统在理论上可行。因此，我们本次的项目聚焦于一个部署在区块链系统上的、用智能合约编写的抽卡系统，为未来抽卡链游的发展奠定基础。
+近几年来，抽卡游戏在全世界范围内越来越火热，但基本上现存的所有含有抽卡元素的游戏均为传统的中心化游戏。即代码不公开，且由游戏发行商运行传统服务器来维持游戏运营。因此，经常有游戏玩家诟病抽卡机制与商家声称的不一致，游戏发行商“暗箱操作”等等。显然，抽卡游戏需要玩家对发行商的信任，这让我们想到了近年来大火的区块链游戏（GameFi），我们是否能将抽卡游戏做到区块链上呢？区块链（公链）公开透明、不可篡改的性质以及[Chainlink](https://chain.link/)为以太坊智能合约提供的可验证随机数（VRF）服务使得我们的抽卡系统在理论上可行。因此，我们本次的项目聚焦于一个部署在区块链系统上的、用智能合约编写的抽卡系统，为未来抽卡链游的发展奠定基础。
 
 
 ## 二、项目环境与产出
@@ -32,7 +32,7 @@ https://rinkeby.etherscan.io/address/0xeb471970806369b4769571e206fe631a033b78e8
 ![写接口](/img/writecontract.png)
 
 
-这之中有部分为ERC721接口，可以参考ERC721标准的文档，这里不赘述。主要用户抽卡过程中可能会需要调用的接口。
+这之中有部分为ERC721接口，可以参考ERC721标准的文档，这里不赘述。主要介绍用户抽卡过程中可能会需要调用的接口。
 
 ### 读接口：
 
@@ -92,18 +92,20 @@ metadata url: https://ipfs.io/ipfs/Qme6qr1yKQVA4PL7XwS9rkmAoGMgX8CaTRunGUMgnyL5q
 
 上面我们提供了我们部署好的实例，现在我们展示如何简便地部署属于自己的抽卡合约。
 
+**注意**：下列方法既适用于部署在类似于rinkeby的测试网络，同样适用于部署于以太坊主网络的生产环境，只是一些合约的地址略有不同。
+
 ### 1. 订阅VRF
 
 之前提到了，我们的随机数由Chainlink提供，因此在部署合约之前，我们需要通过下面的链接进行订阅：https://vrf.chain.link
 
-订阅完毕后，我们需要向VRF coordinator提供一些LINK代币，每一次申请随机数，将会消耗我们一定的LINK（这也是为什么我们的抽卡系统的入场费设置得比较高，因为成本同样不低）
+选择需要部署的网络，并进行订阅。订阅完毕后，我们需要向所部署网络的VRF coordinator提供一些LINK代币，每一次申请随机数，将会消耗我们一定的LINK（这也是为什么我们的抽卡系统的入场费设置得比较高，因为成本同样不低）
 ![sub](/img/sub.png)
 
 
 ### 2. 部署Cards.sol
-在本项目contracts文件夹中，有本项目核心代码Cards.sol。在部署前，若使用与上面实例中不同的卡片和metadata，需要部署方自己准备图片和元数据并且上传到IPFS上，并对Cards.sol的内容进行一些修改：
+在本项目contracts文件夹中，有本项目核心代码Cards.sol。在部署前，若使用与上面实例中不同的卡片和metadata，需要部署方自己准备图片和元数据并且上传到IPFS上，并对Cards.sol的内容进行一些修改（若没有修改需求，可以跳过个性化修改并直接部署合约）：
 
-找到fulfillrandomWords函数，可以看到如下的代码：
+找到Cards.sol的fulfillrandomWords函数，可以看到如下的代码：
 ![fulfillrandomWords](/img/fulfill.png)
 
 这部分代码逻辑简单，不难看懂。
@@ -117,7 +119,7 @@ metadata url: https://ipfs.io/ipfs/Qme6qr1yKQVA4PL7XwS9rkmAoGMgX8CaTRunGUMgnyL5q
 
 subscriptionId为我们的订阅号，在订阅后能够查询到
 
-vrfCoordinator、keyHash、priceFeedAddress：均可以在 https://docs.chain.link 查询到（注意不同以太坊网络这些合约地址是不相同的），其含义分别为向我们提供随机数的合约地址、不同gas费对应的keyhash（gas费越高，随机数相应越快）、向我们提供ETH/USD汇率数据的地址。
+vrfCoordinator、keyHash、priceFeedAddress：可以在  https://docs.chain.link/docs/vrf-contracts/ （随机数服务对应地址）和  https://docs.chain.link/docs/ethereum-addresses/ （ETH/USD实时汇率服务对应地址）查询到。注意不同以太坊网络这些合约地址是不相同的，部署者需要根据自己部署的网络查询对应合约的地址。我们在brownie-config.yaml文件中也提供了部分这些地址信息，但是订阅号需要以部署者订阅后得到的为准。vrfCoordinator、keyHash、priceFeedAddress的含义分别为向我们提供随机数的合约地址、不同gas费对应的keyhash（gas费越高，随机数相应越快）、向我们提供ETH/USD汇率数据的地址。
 legendRate, epicRate, rareRate, normalRate：即各个稀有度对应的百分比，要求其和必须为100。
 
 将对应的数据填入，并发出部署合约交易。
