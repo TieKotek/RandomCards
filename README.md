@@ -8,7 +8,7 @@ A brownie project for random cards system on Ethereum.
 
 
 ## 二、项目环境与产出
-我们使用了基于web3.py的智能合约框架[brownie](https://github.com/eth-brownie/brownie)进行项目的搭建与测试。主要产出为一份经过充分测试的智能合约代码（/contracts/Cards.sol）以及部署在rinkeby测试网络上的一份实例。
+我们使用了基于web3.py的智能合约框架[brownie](https://github.com/eth-brownie/brownie)进行项目的搭建与测试。主要产出为一份经过充分测试的智能合约代码[Cards.sol](./contracts/Cards.sol)以及部署在rinkeby测试网络上的一份实例。
 
 
 ## 三、项目特点
@@ -105,7 +105,7 @@ metadata url: https://ipfs.io/ipfs/Qme6qr1yKQVA4PL7XwS9rkmAoGMgX8CaTRunGUMgnyL5q
 ### 2. 部署Cards.sol
 在本项目contracts文件夹中，有本项目核心代码Cards.sol。在部署前，若使用与上面实例中不同的卡片和metadata，需要部署方自己准备图片和元数据并且上传到IPFS上，并对Cards.sol的内容进行一些修改（若没有修改需求，可以跳过个性化修改并直接部署合约）：
 
-找到Cards.sol的fulfillrandomWords函数，可以看到如下的代码：
+找到[Cards.sol](./contracts/Cards.sol)的fulfillrandomWords函数，可以看到如下的代码：
 ![fulfillrandomWords](/img/fulfill.png)
 
 这部分代码逻辑简单，不难看懂。
@@ -119,7 +119,7 @@ metadata url: https://ipfs.io/ipfs/Qme6qr1yKQVA4PL7XwS9rkmAoGMgX8CaTRunGUMgnyL5q
 
 subscriptionId为我们的订阅号，在订阅后能够查询到
 
-vrfCoordinator、keyHash、priceFeedAddress：可以在  https://docs.chain.link/docs/vrf-contracts/ （随机数服务对应地址）和  https://docs.chain.link/docs/ethereum-addresses/ （ETH/USD实时汇率服务对应地址）查询到。注意不同以太坊网络这些合约地址是不相同的，部署者需要根据自己部署的网络查询对应合约的地址。我们在brownie-config.yaml文件中也提供了部分这些地址信息，但是订阅号需要以部署者订阅后得到的为准。vrfCoordinator、keyHash、priceFeedAddress的含义分别为向我们提供随机数的合约地址、不同gas费对应的keyhash（gas费越高，随机数相应越快）、向我们提供ETH/USD汇率数据的地址。
+vrfCoordinator、keyHash、priceFeedAddress：可以在  https://docs.chain.link/docs/vrf-contracts/ （随机数服务对应地址）和  https://docs.chain.link/docs/ethereum-addresses/ （ETH/USD实时汇率服务对应地址）查询到。注意不同以太坊网络这些合约地址是不相同的，部署者需要根据自己部署的网络查询对应合约的地址。我们在[brownie-config.yaml](./brownie-config.yaml)文件中也提供了部分这些地址信息，但是订阅号需要以部署者订阅后得到的为准。vrfCoordinator、keyHash、priceFeedAddress的含义分别为向我们提供随机数的合约地址、不同gas费对应的keyhash（gas费越高，随机数相应越快）、向我们提供ETH/USD汇率数据的地址。
 legendRate, epicRate, rareRate, normalRate：即各个稀有度对应的百分比，要求其和必须为100。
 
 将对应的数据填入，并发出部署合约交易。
