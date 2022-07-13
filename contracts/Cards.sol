@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 contract Cards is VRFConsumerBaseV2, ERC721 {
     using Strings for uint256;
     uint256 public randomness;
-    uint256 public usdEntryFee;
+    uint256 private usdEntryFee;
     VRFCoordinatorV2Interface immutable COORDINATOR;
     AggregatorV3Interface internal ethUsdPriceFeed;
     address payable s_owner;
@@ -111,9 +111,9 @@ contract Cards is VRFConsumerBaseV2, ERC721 {
         return string(abi.encodePacked(base, tokenId.toString()));
     }
 
-    function setusdEntryFee(uint256 _fee) public onlyOwner {
+    function setUsdEntryFee(uint256 _fee) public onlyOwner {
         usdEntryFee = _fee * 10**18;
-    } // centralized, may be deleted in the future.
+    }
 
     function Enter() public payable {
         require(msg.value >= getEntryFee(), "YOU NEED MORE ETH!");
@@ -173,7 +173,15 @@ contract Cards is VRFConsumerBaseV2, ERC721 {
         return costToEnter;
     }
 
+    function getUsdEntryFee() public view returns (string memory) {
+        return
+            string(
+                abi.encodePacked((usdEntryFee / (10**18)).toString(), ".00")
+            );
+    } // According to our setting, the fee is always a integer number of dollars.
+
     function withdraw() public onlyOwner {
+        require(address(this).balance > 0, "Nothing to withdraw!");
         s_owner.transfer(address(this).balance);
     }
 

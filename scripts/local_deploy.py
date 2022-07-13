@@ -30,6 +30,7 @@ def deploy():
         {"from": accounts[0]},
     )
     entryFee = cards.getEntryFee()
+    print(cards.getUsdEntryFee())
     print(f"entryFee is {entryFee}")
     return cards, vrf, entryFee
 

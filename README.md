@@ -36,8 +36,8 @@ https://rinkeby.etherscan.io/address/0xeb471970806369b4769571e206fe631a033b78e8
 
 ### 读接口：
 
-#### 1. usdEntryFee
-这个接口会返回由合约部署方决定的单抽美元价格，其小数点精度为18，即返回的数字为：$单抽美元价格\times 10^{18}$
+#### 1. getUsdEntryFee
+这个接口会返回由合约部署方决定的单抽美元价格，为一个精确到美分的两位小数。
 
 
 #### 2. getEntryFee
