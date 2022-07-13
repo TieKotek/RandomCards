@@ -6,6 +6,7 @@ def main():
     vrf_addr = config["networks"][network.show_active()]["VRFCoordinator"]
     price_addr = config["networks"][network.show_active()]["Aggregator"]
     key_hash = config["networks"][network.show_active()]["keyHash"]
+    account = accounts.add(config["wallets"]["from_key"])
     cards = Cards.deploy(
         sub_id,
         vrf_addr,
@@ -15,6 +16,6 @@ def main():
         8,
         40,
         50,
-        {"from": accounts.load("hrq")},
+        {"from": account},
         publish_source=True,
     )
